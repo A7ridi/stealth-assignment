@@ -10,6 +10,7 @@ const StepSecond = ({
   field = "",
   setField = () => {},
   btnLoader = false,
+  jobDetails = {},
 }) => {
   return (
     <div className="flex flex-col h-full justify-between">

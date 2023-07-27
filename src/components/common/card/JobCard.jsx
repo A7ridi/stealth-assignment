@@ -1,11 +1,17 @@
 import React from "react";
 import NetflixLogo from "../../../assets/icon/netflix-logo.svg";
 import PrimaryButton from "../button/PrimaryButton";
+import OutlinedButton from "../button/OutlinedButton";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 
-const JobCard = ({ job }) => {
+const JobCard = ({
+  job,
+  deleteHandler = () => {},
+  toggleModal = () => {},
+  setJobDetails,
+}) => {
   return (
-    <div className="flex items-start gap-x-2 px-6 py-4 border border-card-border rounded-lg bg-card-color">
+    <div className="flex flex-auto w-1/3 items-start gap-x-2 px-6 py-4 border border-card-border rounded-xl bg-card-color">
       <img src={NetflixLogo} alt="netflix" width="48" />
 
       <div className="flex flex-1 flex-col gap-y-6">
@@ -13,8 +19,17 @@ const JobCard = ({ job }) => {
           <div className="flex justify-between items-center">
             <h2 className="text-2xl">{job?.jobTitle || ""}</h2>
             <div className="flex gap-3">
-              <PencilIcon className="w-5 h-5 cursor-pointer" />
-              <TrashIcon className="w-5 h-5 cursor-pointer" />
+              <PencilIcon
+                className="w-5 h-5 cursor-pointer"
+                onClick={() => {
+                  toggleModal();
+                  setJobDetails(job);
+                }}
+              />
+              <TrashIcon
+                className="w-5 h-5 cursor-pointer"
+                onClick={() => deleteHandler(job.id)}
+              />
             </div>
           </div>
           <h3>
@@ -38,7 +53,11 @@ const JobCard = ({ job }) => {
         </div>
 
         <div>
-          <PrimaryButton title="Apply Now" />
+          {job?.applyType === "Quick apply" ? (
+            <PrimaryButton title="Apply Now" />
+          ) : (
+            <OutlinedButton title="External Apply" />
+          )}
         </div>
       </div>
     </div>
